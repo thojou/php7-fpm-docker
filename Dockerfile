@@ -10,7 +10,9 @@ RUN apk add --update --no-cache \
     bash \
     curl \
     icu-dev \
-    libzip
+    libzip-dev \
+    zlib-dev
+
 
 RUN docker-php-ext-configure \
     intl
@@ -18,7 +20,8 @@ RUN docker-php-ext-configure \
 RUN docker-php-ext-install \
     intl \
     opcache \
-    pdo_mysql 
+    pdo_mysql \
+    zip
 
 RUN curl -sSL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
