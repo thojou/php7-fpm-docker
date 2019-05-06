@@ -2,9 +2,11 @@ jobs:
   include:
     - stage: "Build"
       script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker build -t php7-fpm .
-        #- docker images
+        - docker images
     - stage: "Test"
       script:
         - docker images
+    - stage: 'Deploy'
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
