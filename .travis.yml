@@ -1,3 +1,6 @@
+services:
+  - docker
+
 jobs:
   include:
     - stage: "Build"
@@ -7,6 +10,10 @@ jobs:
     - stage: "Test"
       script:
         - docker images
+        - docker run --rm -it php7-fpm php -v
+        - docker run --rm -it php7-fpm composer -v
     - stage: 'Deploy'
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker tag php7-fpm $DOCKER_USERNAME/php7-fpm
+        - docker push $DOCKER_USERNAME/php7-fpm
